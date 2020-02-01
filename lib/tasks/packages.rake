@@ -4,14 +4,17 @@ require 'zlib'
 
 namespace :packages do
 	desc 'Extracts all package information from CRAN server'
-	task :extract_all => :environment do
+	task :index_data, [:schedule]  => :environment do |task, args|
 		begin
 			package_to_do = 50 # limit the extracted packages to 50
 			packages = Array.new
 
 			package_contents = URI.open(Package::PACKAGE_FILE) { |f| f.read }
 			packages = Dcf.parse package_contents
-			packages[0..(package_to_do - 1)].each_with_index do |p, i|
+			unless args[:schedule] == 'daily'
+				packages = packages[0..(package_to_do - 1)]
+			else
+			packages.each_with_index do |p, i|
 				package_data = {
 					package_name: p['Package'].to_s,
 					version: p['Version'].to_s,
