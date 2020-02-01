@@ -1,24 +1,24 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
 * Ruby version
+	Ruby version 2.7.0
 
-* System dependencies
+* Setup
+	
+	1. bundle install
+	2. rails db:create
+	3. rails db:migrate
 
-* Configuration
+* Initial indexed data
 
-* Database creation
+	Run the following rake task:
 
-* Database initialization
+	rails packages:index_data
 
-* How to run the test suite
+	This will index the first 50 packages from the PACKAGES file in the CRAN Server
 
-* Services (job queues, cache servers, search engines, etc.)
+* Add daily indexing task to cronjob
 
-* Deployment instructions
-
-* ...
+	1. crontab -e
+	2. Add the following line:
+		0 12 * * * cd (project location); rails packages:index_data['daily']
