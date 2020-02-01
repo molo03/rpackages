@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_31_165829) do
+ActiveRecord::Schema.define(version: 2020_02_01_091322) do
 
   create_table "contributors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -30,9 +30,10 @@ ActiveRecord::Schema.define(version: 2020_01_31_165829) do
     t.string "version"
     t.datetime "publication_date"
     t.string "title"
-    t.string "description"
+    t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["package_name", "version"], name: "index_packages_on_package_name_and_version", unique: true
   end
 
 end
